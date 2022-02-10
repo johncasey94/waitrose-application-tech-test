@@ -77,8 +77,10 @@ public class ProductBuilder {
         BigDecimal was = productInfo.getWasPrice();
         BigDecimal now = productInfo.getNowPrice();
 
-        BigDecimal percentageDifference = was.divide(now,2, RoundingMode.HALF_UP);
-        return BIG_DECIMAL_100.subtract(percentageDifference).setScale(0, RoundingMode.HALF_UP).toString();
+        BigDecimal diff = was.subtract(now);
+        BigDecimal diffRatio = diff.divide(was, 2, RoundingMode.HALF_UP);
+
+        return diffRatio.multiply(BIG_DECIMAL_100).setScale(0, RoundingMode.HALF_UP).toString();
     }
 
     private static String formatDecimalAmount(BigDecimal bigDecimalAmount) {
